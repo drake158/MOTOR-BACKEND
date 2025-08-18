@@ -1,9 +1,9 @@
 import { Controller, Get, Query, Req, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { InspirationService } from './inspiration.service';
-import { InspirationQueryDto } from './dto/inspiration-query.dto';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { SearchService } from '../search/search.service';
+import { InspirationQueryDto } from './dto/inspiration-query.dto';
+import { InspirationService } from './inspiration.service';
 
 @ApiTags('inspirations')
 @ApiBearerAuth()

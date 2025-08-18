@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { SearchModule } from './search/search.module';
 import { InspirationModule } from './inspiration/inspiration.module';
+import { SearchModule } from './search/search.module';
+import { UsersModule } from './users/users.module';
 
-import { User } from './users/users.entity';
 import { Search } from './search/search.entity';
+import { User } from './users/users.entity';
 
 @Module({
   imports: [
@@ -23,8 +23,8 @@ import { Search } from './search/search.entity';
         host: cfg.get<string>('DB_HOST', 'localhost'),
         port: parseInt(cfg.get<string>('DB_PORT', '3306'), 10),
         username: cfg.get<string>('DB_USER', 'root'),
-        password: cfg.get<string>('DB_PASS', ''),
-        database: cfg.get<string>('DB_NAME', 'inspiration'),
+        password: cfg.get<string>('DB_PASS', 'Lolesraro1'),
+        database: cfg.get<string>('DB_NAME', 'mi_app'),
         entities: [User, Search],
         synchronize: true, // SOLO DEV
         // logging: true,
