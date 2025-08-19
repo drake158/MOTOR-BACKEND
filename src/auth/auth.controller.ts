@@ -1,25 +1,33 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UsersService } from '../users/users.service';
+import { Body, Controller, Get, Post, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { log } from 'console';
+import { AuthGuard } from '../auth/guard/auth.guard';
 
-@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private users: UsersService, private auth: AuthService) {}
+  constructor(private readonly authService: AuthService) {};
 
-  @ApiOperation({ summary: 'Registro de usuario' })
+  @Post('login')
+  login(
+    @Body()
+    loginDto: LoginDto,
+  ){
+    return this.authService.login(loginDto);
+  }
+  
   @Post('register')
-  async register(@Body() dto: RegisterDto) {
-    const u = await this.users.create(dto);
-    return { message: 'Usuario creado', userId: u.id };
+  register(
+    @Body()
+    registerDto: RegisterDto,
+  ){
+    return this.authService.register(registerDto);
   }
 
-  @ApiOperation({ summary: 'Login de usuario (retorna JWT)' })
-  @Post('login')
-  login(@Body() dto: LoginDto) {
-    return this.auth.login(dto.email, dto.password);
+  @Get('profile')
+  @UseGuards(AuthGuard)
+  getProfile(@Request() req) {
+    return req.User;
   }
 }
