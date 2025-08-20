@@ -3,12 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from './auth/auth.module';
-import { InspirationModule } from './inspiration/inspiration.module';
-import { SearchModule } from './search/search.module';
 import { UsersModule } from './users/users.module';
 
-import { Search } from './search/search.entity';
-import { User } from './users/users.entity';
+import { User } from './users/entity/users.entity';
 
 @Module({
   imports: [
@@ -21,20 +18,18 @@ import { User } from './users/users.entity';
       useFactory: (cfg: ConfigService) => ({
         type: 'mysql',
         host: cfg.get<string>('DB_HOST', 'localhost'),
-        port: parseInt(cfg.get<string>('DB_PORT', '3306'), 10),
+        port: parseInt(cfg.get<string>('DB_PORT', '3006'), 10),
         username: cfg.get<string>('DB_USER', 'root'),
         password: cfg.get<string>('DB_PASS', 'Lolesraro1'),
         database: cfg.get<string>('DB_NAME', 'mi_app'),
-        entities: [User, Search],
+        entities: [User],
         synchronize: true, // SOLO DEV
         // logging: true,
       }),
     }),
 
     UsersModule,
-    AuthModule,
-    SearchModule,
-    InspirationModule,
+    AuthModule
   ],
 })
 export class AppModule {}

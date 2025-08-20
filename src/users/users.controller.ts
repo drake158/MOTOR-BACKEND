@@ -5,9 +5,9 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  // endpoint protegido que devuelve los datos del usuario autenticado
-  @UseGuards(AuthGuard('jwt'))
+  
   @ApiBearerAuth()
+
   @Get('me')
   me(@Req() req: any) {
     return req.user; // { userId, email }
